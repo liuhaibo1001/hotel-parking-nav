@@ -277,15 +277,15 @@
         </div>
 
         <div class="nav-buttons">
-            <a href="javascript:void(0)" onclick="navigateWithGaode()" class="btn btn-gaode">
+            <a href="https://uri.amap.com/navigation?to=湖南省长沙市岳麓区枫林一路479号力力小院停车场&mode=car&policy=1&src=vienna_hotel" class="btn btn-gaode" target="_blank">
                 <div class="btn-icon">🗺️</div>
                 高德地图导航
             </a>
-            <a href="javascript:void(0)" onclick="navigateWithTencent()" class="btn btn-tencent">
+            <a href="https://apis.map.qq.com/uri/v1/routeplan?type=drive&tocoord=28.238000,112.939500&to=力力小院停车场&policy=0&referer=vienna_hotel" class="btn btn-tencent" target="_blank">
                 <div class="btn-icon">🧭</div>
                 腾讯地图导航
             </a>
-            <a href="javascript:void(0)" onclick="navigateWithBaidu()" class="btn btn-baidu">
+            <a href="https://api.map.baidu.com/direction?destination=湖南省长沙市岳麓区枫林一路479号力力小院停车场&mode=driving&src=vienna_hotel&output=html&coord_type=gc02" class="btn btn-baidu" target="_blank">
                 <div class="btn-icon">📍</div>
                 百度地图导航
             </a>
@@ -306,70 +306,5 @@
             <span class="footer-logo">维也纳酒店</span> · 宾至如归
         </footer>
     </div>
-
-    <script>
-        // 力力小院停车场坐标
-        const destination = {
-            name: '力力小院停车场',
-            address: '湖南省长沙市岳麓区枫林一路479号',
-            lat: 28.237867,
-            lng: 112.939156
-        };
-
-        // 获取当前位置并跳转导航
-        function getLocationAndNavigate(mapType) {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    function(position) {
-                        var lat = position.coords.latitude;
-                        var lng = position.coords.longitude;
-                        openNavigation(mapType, lat, lng);
-                    },
-                    function() {
-                        // 获取失败，直接导航（以当前位置为中心）
-                        openNavigation(mapType, null, null);
-                    },
-                    { timeout: 5000, enableHighAccuracy: true }
-                );
-            } else {
-                openNavigation(mapType, null, null);
-            }
-        }
-
-        // 打开导航
-        function openNavigation(mapType, userLat, userLng) {
-            var url = '';
-            
-            if (mapType === 'gaode') {
-                // 高德地图 - 使用Web API直接导航
-                if (userLat && userLng) {
-                    url = 'https://uri.amap.com/navigation?from=' + userLng + ',' + userLat + ',我的位置&to=' + destination.lng + ',' + destination.lat + ',' + destination.name + '&mode=car&policy=1';
-                } else {
-                    // 无法获取位置，使用地点名称导航
-                    url = 'https://uri.amap.com/navigation?from=&to=' + destination.lng + ',' + destination.lat + ',' + encodeURIComponent(destination.name) + '&mode=car&policy=1';
-                }
-            } else if (mapType === 'tencent') {
-                // 腾讯地图
-                if (userLat && userLng) {
-                    url = 'https://apis.map.qq.com/uri/v1/routeplan?type=drive&fromcoord=' + userLat + ',' + userLng + '&tocoord=' + destination.lat + ',' + destination.lng + '&policy=0&referer=vienna_hotel';
-                } else {
-                    url = 'https://wx.navi.qq.com/指引到力力小院停车场?lat=' + destination.lat + '&lng=' + destination.lng;
-                }
-            } else if (mapType === 'baidu') {
-                // 百度地图
-                if (userLat && userLng) {
-                    url = 'https://api.map.baidu.com/direction?origin=latlng:' + userLat + ',' + userLng + '|name:我的位置&destination=latlng:' + destination.lat + ',' + destination.lng + '|name:' + encodeURIComponent(destination.name) + '&mode=driving&src=vienna_hotel&output=html';
-                } else {
-                    url = 'https://api.map.baidu.com/direction?destination=' + encodeURIComponent(destination.address) + '&mode=driving&src=vienna_hotel&output=html';
-                }
-            }
-            
-            window.location.href = url;
-        }
-
-        function navigateWithGaode() { getLocationAndNavigate('gaode'); }
-        function navigateWithTencent() { getLocationAndNavigate('tencent'); }
-        function navigateWithBaidu() { getLocationAndNavigate('baidu'); }
-    </script>
 </body>
 </html>
