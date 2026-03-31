@@ -293,16 +293,16 @@
 
         <script>
             function openGaode() {
-                var toAddr = '%E5%81%9C%E8%BD%A6%E5%9C%BA(%E8%A5%BF%E6%B9%96%E8%A1%97%E9%81%93%E5%8A%B3%E5%8A%A8%E7%9B%91%E5%AF%9F%E4%B8%AD%E9%98%9F%E8%A5%BF%E5%8C%97)';
+                var toCoord = '112.942454,28.201670';
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(function(p) {
                         var from = p.coords.longitude + ',' + p.coords.latitude;
-                        window.location.href = 'https://uri.amap.com/navigation?from=' + from + ',我的位置&to=' + toAddr + '&mode=car&policy=1&callnativeapp=1';
+                        window.location.href = 'https://uri.amap.com/navigation?from=' + from + ',我的位置&to=' + toCoord + ',力力小院停车场&mode=car&policy=1&callnativeapp=1';
                     }, function() {
-                        window.location.href = 'https://uri.amap.com/navigation?to=' + toAddr + '&mode=car&policy=1&callnativeapp=1';
+                        window.location.href = 'https://uri.amap.com/navigation?to=' + toCoord + ',力力小院停车场&mode=car&policy=1&callnativeapp=1';
                     }, { timeout: 5000, enableHighAccuracy: true });
                 } else {
-                    window.location.href = 'https://uri.amap.com/navigation?to=' + toAddr + '&mode=car&policy=1&callnativeapp=1';
+                    window.location.href = 'https://uri.amap.com/navigation?to=' + toCoord + ',力力小院停车场&mode=car&policy=1&callnativeapp=1';
                 }
             }
         </script>
