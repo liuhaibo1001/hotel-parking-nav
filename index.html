@@ -291,18 +291,40 @@
             </a>
         </div>
 
+        <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
         <script>
             function openGaode() {
                 var toCoord = '112.942454,28.201670';
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(function(p) {
-                        var from = p.coords.longitude + ',' + p.coords.latitude;
-                        window.location.href = 'https://uri.amap.com/navigation?from=' + from + ',我的位置&to=' + toCoord + ',力力小院停车场&mode=car&policy=1&callnativeapp=1';
-                    }, function() {
+                // 判断是否在微信中
+                var isWechat = /micromessenger/i.test(navigator.userAgent);
+                if (isWechat) {
+                    // 微信内置浏览器，用腾讯定位接口
+                    if (typeof wx !== 'undefined' && wx.getLocation) {
+                        wx.getLocation({
+                            type: 'gcj02',
+                            success: function(res) {
+                                var from = res.longitude + ',' + res.latitude;
+                                window.location.href = 'https://uri.amap.com/navigation?from=' + from + ',我的位置&to=' + toCoord + ',力力小院停车场&mode=car&policy=1&callnativeapp=1';
+                            },
+                            fail: function() {
+                                window.location.href = 'https://uri.amap.com/navigation?to=' + toCoord + ',力力小院停车场&mode=car&policy=1&callnativeapp=1';
+                            }
+                        });
+                    } else {
                         window.location.href = 'https://uri.amap.com/navigation?to=' + toCoord + ',力力小院停车场&mode=car&policy=1&callnativeapp=1';
-                    }, { timeout: 5000, enableHighAccuracy: true });
+                    }
                 } else {
-                    window.location.href = 'https://uri.amap.com/navigation?to=' + toCoord + ',力力小院停车场&mode=car&policy=1&callnativeapp=1';
+                    // 普通浏览器，用H5 GPS
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(function(p) {
+                            var from = p.coords.longitude + ',' + p.coords.latitude;
+                            window.location.href = 'https://uri.amap.com/navigation?from=' + from + ',我的位置&to=' + toCoord + ',力力小院停车场&mode=car&policy=1&callnativeapp=1';
+                        }, function() {
+                            window.location.href = 'https://uri.amap.com/navigation?to=' + toCoord + ',力力小院停车场&mode=car&policy=1&callnativeapp=1';
+                        }, { timeout: 5000, enableHighAccuracy: true });
+                    } else {
+                        window.location.href = 'https://uri.amap.com/navigation?to=' + toCoord + ',力力小院停车场&mode=car&policy=1&callnativeapp=1';
+                    }
                 }
             }
         </script>
