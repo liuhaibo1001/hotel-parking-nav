@@ -281,7 +281,7 @@
                 <div class="btn-icon">🗺️</div>
                 高德地图导航
             </a>
-            <a href="https://api.map.baidu.com/direction?destination=%E5%8A%9B%E5%8A%9B%E5%B0%8F%E9%99%A2%EF%BC%88%E6%9E%AB%E6%9E%97%E8%B7%AF%E5%BA%97%EF%BC%89%E5%9C%B0%E4%B8%8A%E5%81%9C%E8%BD%A6%E5%9C%BA-%E5%87%BA%E5%85%A5%E5%8F%A3&mode=driving&src=vienna_hotel&output=html&coord_type=gc02" class="btn btn-baidu" target="_blank">
+            <a href="javascript:void(0)" onclick="openBaidu()" class="btn btn-baidu">
                 <div class="btn-icon">📍</div>
                 百度地图导航
             </a>
@@ -322,6 +322,14 @@
                         window.location.href = 'https://uri.amap.com/navigation?to=' + toCoord + ',力力小院停车场&mode=car&policy=1&callnativeapp=1';
                     }
                 }
+            }
+        </script>
+
+        <script>
+            function openBaidu() {
+                var dest = encodeURIComponent('力力小院（枫林路店）地上停车场-出入口');
+                // 使用百度地图调起驾车导航App
+                window.location.href = 'https://api.map.baidu.com/direction?destination=' + dest + '&mode=driving&src=vienna_hotel&coord_type=gc02&output=html';
             }
         </script>
 
