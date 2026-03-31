@@ -281,64 +281,30 @@
                 <div class="btn-icon">🗺️</div>
                 高德地图导航
             </a>
-            <a href="javascript:void(0)" onclick="openTencent()" class="btn btn-tencent">
+            <a href="https://apis.map.qq.com/uri/v1/routeplan?type=drive&to=%E6%B9%96%E5%8D%97%E7%9C%81%E9%95%BF%E6%B2%99%E5%B8%82%E5%B2%B3%E9%BA%93%E5%8C%BA%E6%9E%AB%E6%9E%97%E4%B8%80%E8%B7%AF479%E5%8F%B7%E5%8A%9B%E5%8A%9B%E5%B0%8F%E9%99%A2%E5%81%9C%E8%BD%A6%E5%9C%BA&policy=0&referer=vienna_hotel" class="btn btn-tencent" target="_blank">
                 <div class="btn-icon">🧭</div>
                 腾讯地图导航
             </a>
-            <a href="javascript:void(0)" onclick="openBaidu()" class="btn btn-baidu">
+            <a href="https://api.map.baidu.com/direction?destination=%E6%B9%96%E5%8D%97%E7%9C%81%E9%95%BF%E6%B2%99%E5%B8%82%E5%B2%B3%E9%BA%93%E5%8C%BA%E6%9E%AB%E6%9E%97%E4%B8%80%E8%B7%AF479%E5%8F%B7%E5%8A%9B%E5%8A%9B%E5%B0%8F%E9%99%A2%E5%81%9C%E8%BD%A6%E5%9C%BA&mode=driving&src=vienna_hotel&output=html&coord_type=gc02" class="btn btn-baidu" target="_blank">
                 <div class="btn-icon">📍</div>
                 百度地图导航
             </a>
         </div>
 
         <script>
-            // 获取当前位置
-            function getPos(cb) {
+            // 高德地图需要起点才能规划路线，自动获取GPS
+            function openGaode() {
+                var toAddr = '%E6%B9%96%E5%8D%97%E7%9C%81%E9%95%BF%E6%B2%99%E5%B8%82%E5%B2%B3%E9%BA%93%E5%8C%BA%E6%9E%AB%E6%9E%97%E4%B8%80%E8%B7%AF479%E5%8F%B7%E5%8A%9B%E5%8A%9B%E5%B0%8F%E9%99%A2%E5%81%9C%E8%BD%A6%E5%9C%BA';
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(function(p) {
-                        cb(p.coords.longitude, p.coords.latitude);
+                        var from = p.coords.longitude + ',' + p.coords.latitude;
+                        window.location.href = 'https://uri.amap.com/navigation?from=' + from + '&to=' + toAddr + '&mode=car&policy=1&callnativeapp=1';
                     }, function() {
-                        cb(null, null);
+                        window.location.href = 'https://uri.amap.com/navigation?to=' + toAddr + '&mode=car&policy=1&callnativeapp=1';
                     }, { timeout: 5000, enableHighAccuracy: true });
                 } else {
-                    cb(null, null);
+                    window.location.href = 'https://uri.amap.com/navigation?to=' + toAddr + '&mode=car&policy=1&callnativeapp=1';
                 }
-            }
-
-            function openGaode() {
-                getPos(function(lng, lat) {
-                    var url;
-                    if (lng && lat) {
-                        url = 'https://uri.amap.com/navigation?from=' + lng + ',' + lat + '&to=112.939,28.238&mode=car&policy=1&callnativeapp=1';
-                    } else {
-                        url = 'https://uri.amap.com/navigation?to=112.939,28.238&mode=car&policy=1&callnativeapp=1';
-                    }
-                    window.location.href = url;
-                });
-            }
-
-            function openTencent() {
-                getPos(function(lng, lat) {
-                    var url;
-                    if (lng && lat) {
-                        url = 'https://apis.map.qq.com/uri/v1/routeplan?type=drive&from=' + lat + ',' + lng + '&to=28.238,112.939&policy=0&referer=vienna_hotel';
-                    } else {
-                        url = 'https://apis.map.qq.com/uri/v1/routeplan?type=drive&to=28.238,112.939&policy=0&referer=vienna_hotel';
-                    }
-                    window.location.href = url;
-                });
-            }
-
-            function openBaidu() {
-                getPos(function(lng, lat) {
-                    var url;
-                    if (lng && lat) {
-                        url = 'https://api.map.baidu.com/direction?origin=' + lat + ',' + lng + '&destination=28.238,112.939&mode=driving&coord_type=gc02&output=html';
-                    } else {
-                        url = 'https://api.map.baidu.com/direction?destination=28.238,112.939&mode=driving&coord_type=gc02&output=html';
-                    }
-                    window.location.href = url;
-                });
             }
         </script>
 
