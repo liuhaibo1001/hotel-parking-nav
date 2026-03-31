@@ -332,27 +332,28 @@
         <script>
             function openTencent() {
                 var toCoord = '28.201670,112.942454';
+                var toName = encodeURIComponent('力力小院停车场');
                 var isWechat = /micromessenger/i.test(navigator.userAgent);
                 if (isWechat && typeof wx !== 'undefined' && wx.getLocation) {
                     wx.getLocation({
                         type: 'gcj02',
                         success: function(res) {
                             var from = res.latitude + ',' + res.longitude;
-                            window.location.href = 'https://apis.map.qq.com/uri/v1/routeplan?type=drive&from=' + from + '&to=' + toCoord + '&policy=0&referer=vienna_hotel';
+                            window.location.href = 'https://apis.map.qq.com/uri/v1/routeplan?type=drive&from=' + from + '&to=' + toCoord + '&toName=' + toName + '&policy=0&referer=vienna_hotel';
                         },
                         fail: function() {
-                            window.location.href = 'https://apis.map.qq.com/uri/v1/routeplan?type=drive&to=' + toCoord + '&policy=0&referer=vienna_hotel';
+                            window.location.href = 'https://apis.map.qq.com/uri/v1/routeplan?type=drive&to=' + toCoord + '&toName=' + toName + '&policy=0&referer=vienna_hotel';
                         }
                     });
                 } else if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(function(p) {
                         var from = p.coords.latitude + ',' + p.coords.longitude;
-                        window.location.href = 'https://apis.map.qq.com/uri/v1/routeplan?type=drive&from=' + from + '&to=' + toCoord + '&policy=0&referer=vienna_hotel';
+                        window.location.href = 'https://apis.map.qq.com/uri/v1/routeplan?type=drive&from=' + from + '&to=' + toCoord + '&toName=' + toName + '&policy=0&referer=vienna_hotel';
                     }, function() {
-                        window.location.href = 'https://apis.map.qq.com/uri/v1/routeplan?type=drive&to=' + toCoord + '&policy=0&referer=vienna_hotel';
+                        window.location.href = 'https://apis.map.qq.com/uri/v1/routeplan?type=drive&to=' + toCoord + '&toName=' + toName + '&policy=0&referer=vienna_hotel';
                     }, { timeout: 5000, enableHighAccuracy: true });
                 } else {
-                    window.location.href = 'https://apis.map.qq.com/uri/v1/routeplan?type=drive&to=' + toCoord + '&policy=0&referer=vienna_hotel';
+                    window.location.href = 'https://apis.map.qq.com/uri/v1/routeplan?type=drive&to=' + toCoord + '&toName=' + toName + '&policy=0&referer=vienna_hotel';
                 }
             }
         </script>
