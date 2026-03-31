@@ -334,21 +334,21 @@
                         type: 'gcj02',
                         success: function(res) {
                             var origin = res.latitude + ',' + res.longitude;
-                            window.location.href = 'https://api.map.baidu.com/direction?origin=' + origin + '&destination=' + dest + '&mode=driving&src=vienna_hotel&coord_type=gc02&output=html';
+                            window.location.href = 'https://api.map.baidu.com/direction?origin=' + origin + '&destination=' + dest + '&mode=driving&src=vienna_hotel&coord_type=gc02&output=html&driver_nav=1';
                         },
                         fail: function() {
-                            window.location.href = 'https://api.map.baidu.com/direction?destination=' + dest + '&mode=driving&src=vienna_hotel&coord_type=gc02&output=html';
+                            window.location.href = 'https://api.map.baidu.com/direction?destination=' + dest + '&mode=driving&src=vienna_hotel&coord_type=gc02&output=html&driver_nav=1';
                         }
                     });
                 } else if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(function(p) {
                         var origin = p.coords.latitude + ',' + p.coords.longitude;
-                        window.location.href = 'https://api.map.baidu.com/direction?origin=' + origin + '&destination=' + dest + '&mode=driving&src=vienna_hotel&coord_type=gc02&output=html';
+                        window.location.href = 'https://api.map.baidu.com/direction?origin=' + origin + '&destination=' + dest + '&mode=driving&src=vienna_hotel&coord_type=gc02&output=html&driver_nav=1';
                     }, function() {
-                        window.location.href = 'https://api.map.baidu.com/direction?destination=' + dest + '&mode=driving&src=vienna_hotel&coord_type=gc02&output=html';
+                        window.location.href = 'https://api.map.baidu.com/direction?destination=' + dest + '&mode=driving&src=vienna_hotel&coord_type=gc02&output=html&driver_nav=1';
                     }, { timeout: 5000, enableHighAccuracy: true });
                 } else {
-                    window.location.href = 'https://api.map.baidu.com/direction?destination=' + dest + '&mode=driving&src=vienna_hotel&coord_type=gc02&output=html';
+                    window.location.href = 'https://api.map.baidu.com/direction?destination=' + dest + '&mode=driving&src=vienna_hotel&coord_type=gc02&output=html&driver_nav=1';
                 }
             }
         </script>
