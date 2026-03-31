@@ -328,8 +328,28 @@
         <script>
             function openBaidu() {
                 var dest = encodeURIComponent('力力小院（枫林路店）地上停车场-出入口');
-                // 使用百度地图调起驾车导航App
-                window.location.href = 'https://api.map.baidu.com/direction?destination=' + dest + '&mode=driving&src=vienna_hotel&coord_type=gc02&output=html';
+                var isWechat = /micromessenger/i.test(navigator.userAgent);
+                if (isWechat && typeof wx !== 'undefined' && wx.getLocation) {
+                    wx.getLocation({
+                        type: 'gcj02',
+                        success: function(res) {
+                            var origin = res.latitude + ',' + res.longitude;
+                            window.location.href = 'https://api.map.baidu.com/direction?origin=' + origin + '&destination=' + dest + '&mode=driving&src=vienna_hotel&coord_type=gc02&output=html';
+                        },
+                        fail: function() {
+                            window.location.href = 'https://api.map.baidu.com/direction?destination=' + dest + '&mode=driving&src=vienna_hotel&coord_type=gc02&output=html';
+                        }
+                    });
+                } else if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(p) {
+                        var origin = p.coords.latitude + ',' + p.coords.longitude;
+                        window.location.href = 'https://api.map.baidu.com/direction?origin=' + origin + '&destination=' + dest + '&mode=driving&src=vienna_hotel&coord_type=gc02&output=html';
+                    }, function() {
+                        window.location.href = 'https://api.map.baidu.com/direction?destination=' + dest + '&mode=driving&src=vienna_hotel&coord_type=gc02&output=html';
+                    }, { timeout: 5000, enableHighAccuracy: true });
+                } else {
+                    window.location.href = 'https://api.map.baidu.com/direction?destination=' + dest + '&mode=driving&src=vienna_hotel&coord_type=gc02&output=html';
+                }
             }
         </script>
 
